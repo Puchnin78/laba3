@@ -1,0 +1,59 @@
+#include <iostream>
+#include <locale.h>
+#include <fstream>
+#include <vector>
+ 
+using namespace std;
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    ifstream f_in("startgame.txt");
+    ofstream f_out("endgame.txt");
+    int num, guess, tries = 0;
+    cout << "Угадай число\n";
+    f_in >> num;
+    if (!f_in)
+    {
+        cout << "Не удалось открыть файл\n";
+        return 1;
+    }
+ 
+    vector<int> input_numbers;
+ 
+    do
+    {
+        cout << "Выберите число: ";
+        cin >> guess;
+        tries++;
+ 
+        input_numbers.push_back(guess);
+ 
+        if (guess > num)
+            cout << "Введенное число больше заданного\n";
+ 
+        else if (guess < num)
+            cout << "Введенное число меньше заданного\n";
+ 
+        else
+            cout << "Число угадано!\n";
+    } 
+    while (guess != num);
+    f_in.close();
+ 
+    if (!f_out)
+    {
+        cout << "Не удалось открыть файл\n";
+        return 1;
+    }
+ 
+    for (auto& i : input_numbers)
+    {
+        f_out << "Введенные числа: " << i << "\n";
+        f_out << "Общее количество чисел: " << tries;
+        {
+        f_out.close();
+        }
+        cout << "Результат записан в endgame.txt";
+        return 0;
+    }
+}
