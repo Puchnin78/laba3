@@ -1,0 +1,44 @@
+#include <fstream>
+#include <iostream>
+ 
+ 
+ 
+int main() {
+    
+    ifstream f_in("predel.txt");
+    int limit;
+ 
+    if (!f_in) {
+ 
+       cerr << "не удалось открыть файл\n";
+        return 1;
+ 
+    }
+ 
+    f_in >> limit;
+    f_in.close();
+ 
+    int current;
+    int max = INT_MIN;
+    int sum = 0;
+    size_t number = 0;
+ 
+    while (sum < limit) {
+ 
+        cout << "Введите число: ";
+        cin >> current;
+        ++number;
+ 
+        if (number % 2 == 0)
+            sum = sum + current;
+ 
+        if (max < current)
+            max = current;
+ 
+    }
+    
+    ofstream f_out("kolmax.txt");
+    f_out << number << " " << max << '\n';
+ 
+    return 0;
+}
